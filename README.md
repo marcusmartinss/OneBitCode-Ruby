@@ -1,2 +1,2 @@
-# Curso-Ruby-on-Rails
-Repositório direcionado ao estudo da linguagem Ruby com o framework Rails.
+# OneBitCode-Curso-Ruby
+Repositório direcionado ao estudo da linguagem Ruby com os [vídeos da OneBitCode](https://www.youtube.com/playlist?list=PLdDT8if5attEOcQGPHLNIfnSFiJHhGDOZ).
