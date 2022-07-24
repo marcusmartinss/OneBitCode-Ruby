@@ -1,0 +1,17 @@
+# Bundler - Agrega várias gems em um arquivo
+# e depois instala todas elas, escrevendo
+# 'bundle' no console instala todas dependências
+
+# Para instalá-lo
+# gem install bundler
+
+# No 'Gemfile' fica quais gems serão instaladas
+
+# Para instalá-las use 'bundle install'
+
+# Fonte das gems vai ser dada pelo 'source', e no link padrão
+# vai estar a documentação das gems
+
+source 'https://rubygems.org'
+
+gem 'os'
