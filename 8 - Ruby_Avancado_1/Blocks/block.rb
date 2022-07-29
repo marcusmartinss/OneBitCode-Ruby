@@ -37,3 +37,31 @@ end
 
 #-------------------------------------------------#
 
+=begin
+
+# Um bloco pode ser passado como  argumento
+# implícito de um método.
+# Depois, para chamar dentro do método o bloco
+# que foi passado utilize a palavra yield.
+def double
+    # Call the block
+    yield
+    yield
+end
+
+double { puts "Exec the block" }
+
+=end
+
+#-------------------------------------------------#
+
+# Também é possível receber blocos como parâmetro
+# utilizando o símbolo '&', para que o bloco seja
+# executado é necessário utilizar o nome do bloco
+# acompanhado do método ".call"
+def foo(name, &block)
+ @name = name
+ block.call
+end
+ 
+foo('Leonardo') { puts "Hellow #{@name}" }
