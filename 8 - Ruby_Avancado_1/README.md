@@ -58,3 +58,62 @@ Serve como um container para agrupar objetos relacionados (classes, constantes, 
 ### 2. Mixins
 
 Servem para incluir funcionalidades extras as classes.
+
+# Exercícios
+
+## Missão 1
+
+O ruby oferece um método chamado **capitalize** para tornar a primeira letra de uma string maiúscula.
+
+Sabendo disso crie uma lambda que recebe um nome como parâmetro e o imprime com a primeira letra maiúscula. Esta lambda deverá ser salva dentro de uma variável que será passada como argumento de um método chamado **capitalize_name**.
+
+Dentro deste método você chamará a lambda duas vezes, passando como parâmetro em cada uma delas um nome diferente.    
+
+## Missão 2
+
+Crie um módulo chamado **Person** com as classes **Juridic** e **Physical**.
+
+Ao executar a instrução:
+
+    Person::Juridic.new('M. C. Investimentos', '4241.123/0001').add
+
+Seu código deverá retornar:
+
+    Pessoa Jurídica Adicionada
+    nome: M. C. Investimentos
+    cnpj: 4241.123/0001
+
+E com a instrução:
+
+    Person::Physical.new('José Almeida', '425.123.123-123').add
+
+Deverá retornar:
+
+    Pessoa Física Adicionada
+    nome: José Almeida
+    cnpj: 425.123.123-123
+
+## Missão 3
+
+Pesquisar o que é o Proc em Ruby e descobrir as diferenças entre ele e o Lambda.
+
+### Resposta Missão 3
+
+O Proc não dá erros quando existem argumentos a mais passados, e executa apenas com os que são declarados explicitamente. Já o Lambda precisa ter o número exato de argumentos declarados para que funcione. Exemplo:
+
+    p = Proc.new {|a, b| puts a**2+b**2 } # => #<Proc:0x3c7d28@(irb):1>
+    p.call 1, 2 # => 5
+    p.call 1 # => NoMethodError: undefined method `**' for nil:NilClass
+    p.call 1, 2, 3 # => 5
+    l = lambda {|a, b| puts a**2+b**2 } # => #<Proc:0x15016c@(irb):5 (lambda)>
+    l.call 1, 2 # => 5
+    l.call 1 # => ArgumentError: wrong number of arguments (1 for 2)
+    l.call 1, 2, 3 # => ArgumentError: wrong number of arguments (3 for 2)
+
+Além disso, Lambdas retornam o valor do Lambda, enquanto o Proc retorna o seu bloco. Ex:
+
+    lambda { return :foo }.call # => :foo
+    return # => LocalJumpError: unexpected return
+    Proc.new { return :foo }.call# => LocalJumpError: unexpected return
+
+Fonte: [Stack Overflow](https://stackoverflow.com/questions/1740046/whats-the-difference-between-a-proc-and-a-lambda-in-ruby)
