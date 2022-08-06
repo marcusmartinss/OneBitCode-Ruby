@@ -161,9 +161,183 @@ O módulo Math também fornece o valor de duas constantes bastante utilizadas: *
 
 Tenha acesso a mais métodos matemáticos do módulo Math através da [documentação](https://ruby-doc.org/core-2.2.0/Math.html).
 
+## Time
 
+O Ruby conta com uma classe chamada **Time** para representar datas e horas.
 
+1. Para imprimir o horário atual
 
+        time = Time.now
+        puts time
 
+2. Para o ano use o método **year**
 
+        puts time.year
 
+3. Imprimindo o mês do ano com o método **month**
+
+        puts time.month
+
+4. Para saber o dia do mês utilize o método **day**
+
+        puts time.day
+
+5. O método **strftime** permite a formatação de uma data em uma forma específica. Essa formatação é feita por diretivas que começam com o símbolo de %.
+
+        time.strftime('%d/%m/%y')
+
+- Significado das diretivas
+
+- %d -> Dia do mês
+
+- %m -> Mês do ano
+
+- %y -> Ano
+
+6. Verificando se o dia da semana é sábado
+
+        puts time.saturday?
+
+Você também pode comparar duas datas.
+
+7. Crie um novo objeto com o horário atual
+
+        time2 = Time.now
+
+8. Ao comparar as datas de forma completa o resultado será **false**
+
+        time == time2 # => false
+
+9. Comparando o ano das duas datas, o resultado será **true**
+
+        time.year == time2.year # => true
+
+## Missing Methods
+
+Voltando para o conteúdo envolvendo classes e métodos, conheça agora o método **method_missing**. Ele é utilizado para interceptar chamadas a métodos que não existem.
+
+1. Crie um arquivo chamado **method_missing.rb**
+
+        class Fish
+              def method_missing(method_name)
+                    puts "Fish don't have #{method_name} behavior"
+              end
+
+              def swim
+                    puts 'Fish is swimming'
+              end
+        end
+
+        fish = Fish.new
+        fish.swim
+        fish.walk
+
+- A partir daí você pode controlar como responder este tipo de situação. Quando o método **walk** que não existe é chamado, o método **method_missing** faz uma interceptação. Nele é recebido como parâmetro o nome do método que não existe.
+
+## Self
+
+No ruby, self é uma **variável especial** que **aponta** para o **objeto atual**.
+
+1. Crie o arquivo self.rb 
+
+        class Foo
+              attr_accessor :teste
+
+              def bar
+                    puts self
+              end
+        end
+
+        foo = Foo.new
+        puts foo
+        foo.bar
+
+- A variável **self** aponta para o **Objeto** onde ela se encontra.  No caso está apontando para uma instância da classe Foo e, por isso, as instruções **puts foo** e **puts self** retornam o mesmo resultado.
+
+- Perceba que a variável self **não precisa** ser declarada. Ela é disponível em qualquer lugar, mas não esqueça que seu valor é referente ao objeto que pertence.
+
+### Variáveis self em objetos diferentes possuem valores diferentes.
+
+2. Com o **self** é possível criar **métodos de classe**,  que não precisam de uma instância para serem chamados.
+
+        class Foo
+              def self.bar
+                    puts self
+              end
+        end
+
+        Foo.bar
+
+3. Você também pode utilizá-lo para se referir a atributos do objeto atual.
+
+        class Pen
+              attr_accessor :color
+        
+              def pen_color
+                    puts "The color is " + self.color
+              end
+        end
+
+        pen = Pen.new
+        pen.color = "blue"
+        pen.pen_color
+
+- O **self.color** retorna a cor do objeto **pen**.
+
+## Métodos Private e Protected
+
+Por padrão, todos os métodos definidos são públicos. Isso significa que eles podem ser acessados por qualquer um.
+
+Mas além dos métodos públicos, existem outros dois tipos de métodos chamados **private** e **protected**.
+
+### Private
+
+Método interno de uma classe. Apenas os métodos públicos dessa classe ou de classes descendentes podem chamá-lo.
+
+O **self** é o único receptor de um método private
+
+1. Defina um método abaixo da palavra **private**, para que ele seja deste tipo
+
+        class Foo
+              def call_private
+                    bar
+              end
+
+              private
+
+              def bar
+                    puts "private method"
+              end
+        end
+
+        foo = Foo.new
+
+        foo.call_private
+
+Se você tentar chamá-lo a partir da instância foo (**foo.bar**), receberá uma mensagem de erro informando que este método é privado.
+
+### Protected
+
+A **diferença** entre ele e o **private**, é que o método **protected** pode ter como receptor qualquer instância de sua classe.
+
+        class Foo
+              def call_private(instance)
+                    instance.bar
+              end
+
+              protected
+
+              def bar
+                    puts "private method"
+              end
+        end
+
+        instance_1 = Foo.new
+
+        instance_2 = Foo.new
+
+        instance_1.call_private(instance_1)
+
+        instance_1.call_private(instance_2)
+
+Perceba que você pode utilizar o receptor **instance** para o método **bar** que é do tipo **protected**, por isso, tome cuidado ao utilizar um método protected.
